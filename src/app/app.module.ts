@@ -11,6 +11,7 @@ import {ApiService} from './services/api.service';
 import {YoutubeService} from './services/youtube.service';
 import {LocalStorageService} from './services/local-storage.service';
 import {HttpClientModule} from '@angular/common/http';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {HttpClientModule} from '@angular/common/http';
     MDBBootstrapModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [
     ApiService,

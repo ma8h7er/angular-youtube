@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {YoutubeService} from './services/youtube.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LocalStorageService} from './services/local-storage.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -111,5 +112,24 @@ export class AppComponent implements OnInit {
   forceRefresh() {
     this.localStorageService.clearAll();
     this.getVideos(true);
+  }
+
+  /**
+   * When drop a video card into new position move it in the vidoes array and save in local storage
+   * In future will be saved in the DB
+   * @param {CdkDragDrop<any[]>} event
+   */
+  onDropVideo(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.videos, event.previousIndex, event.currentIndex);
+    this.localStorageService.set('youtube_videos', this.videos);
+  }
+
+  /**
+   * Save a note for each video
+   * In future will be saved in the DB
+   * @param video
+   */
+  saveVideoNote(video: any) {
+    this.localStorageService.set('youtube_videos', this.videos);
   }
 }

@@ -32,8 +32,8 @@
         <h1 class="text-center">Please enter the channel ID to get videos</h1>
       </div>
     </div>
-    <div *ngIf="videos.length" class="row">
-      <div *ngFor="let video of videos" class="col-sm-3 col-12 my-3">
+    <div *ngIf="videos.length" class="row" cdkDropList (cdkDropListDropped)="onDropVideo($event)">
+      <div *ngFor="let video of videos" class="col-sm-3 col-12 my-3" cdkDrag>
         <mdb-card>
           <!--Card image-->
           <div class="video-thumb">
@@ -45,7 +45,7 @@
             <mdb-card-title>
               <p class="blue-text d-flex justify-content-between">
                 <span>{{ video.snippet.title }}</span>
-                <a class="btn-floating btn-action">
+                <a class="btn-floating btn-action" cdkDragHandle>
                   <i class="fas fa-arrows-alt"></i>
                 </a>
               </p>
@@ -63,6 +63,7 @@
             </div>
           </mdb-card-body>
         </mdb-card>
+
       </div>
     </div>
   </div>
