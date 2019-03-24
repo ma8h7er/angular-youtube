@@ -1,0 +1,16 @@
+.search-container {
+  max-width: 70%;
+}
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 95%;
+  }
+}
+.video-thumb {
+  iframe {
+    width: 100%;
+    min-height: 280px;
+    border: none;
+    padding: 0;
+  }
+}

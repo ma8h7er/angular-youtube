@@ -1,21 +1,69 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>
+<section class="section py-5">
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <div class="search-container">
+        <form [formGroup]="searchForm" (submit)="getVideos()" accept-charset="UTF-8" novalidate>
+          <div class="md-form input-group mb-3">
+            <input formControlName="id" type="text" class="form-control" placeholder="Channel ID" aria-label="Channel ID" aria-describedby="search-button">
+            <div class="input-group-append">
+              <button mdbBtn color="primary" size="md" class="m-0 px-3 py-2" type="submit" mdbWavesEffect [disabled]="buttonDisabled">
+                Get videos
+              </button>
+              <button (click)="forceRefresh()" mdbBtn color="red" size="md" class="m-0 px-3 py-2" type="button" mdbWavesEffect [disabled]="buttonDisabled">
+                Force refresh
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <h1>{{ channelTitle }}</h1>
+    </div>
+  </div>
+</section>
+<section class="section mt-3">
+  <div class="container">
+    <div *ngIf="loadingIndicator" class="my-5">
+      <app-section-loading></app-section-loading>
+    </div>
+    <div *ngIf="!videos.length" class="my-5">
+      <div class="d-flex justify-content-center pt-5">
+        <h1 class="text-center">Please enter the channel ID to get videos</h1>
+      </div>
+    </div>
+    <div *ngIf="videos.length" class="row">
+      <div *ngFor="let video of videos" class="col-sm-3 col-12 my-3">
+        <mdb-card>
+          <!--Card image-->
+          <div class="video-thumb">
+            <iframe [src]="video.videoUrl" ></iframe>
+          </div>
+          <!--Card content-->
+          <mdb-card-body>
+            <!--Title-->
+            <mdb-card-title>
+              <p class="blue-text d-flex justify-content-between">
+                <span>{{ video.snippet.title }}</span>
+                <a class="btn-floating btn-action">
+                  <i class="fas fa-arrows-alt"></i>
+                </a>
+              </p>
+              <hr/>
+            </mdb-card-title>
+            <div class="row">
+              <div class="col-12">
+                <div class="md-form">
+                  <textarea class="md-textarea form-control" [(ngModel)]="video.note" placeholder="Video note" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="col-12">
+                <button (click)="saveVideoNote(video)" class="btn btn-sm btn-primary">Save</button>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+    </div>
+  </div>
+</section>
